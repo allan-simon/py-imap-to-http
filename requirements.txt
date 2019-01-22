@@ -1,0 +1,4 @@
+aioimaplib
+mail-parser
+requests
+requests-toolbelt
