@@ -7,4 +7,4 @@ COPY service/ /service
 # install requirements
 RUN /entrypoint.sh -P requirements.txt
 
-CMD ["python", "-m" , "service"]
+CMD ["python", "-u", "-m" , "service"]
