@@ -13,7 +13,13 @@ vagrant ssh
 
 ### Use it
 
-You can either use the docker image or run the project using
+You can either use the docker image
+
+```
+docker push allansimon/py-imap-to-http
+```
+
+or run the project using
 
 ```sh
 python3 -m service
