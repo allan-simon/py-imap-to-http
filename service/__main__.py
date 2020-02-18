@@ -18,13 +18,15 @@ IMAP_FAILURE_FOLDER = os.environ['IMAP_SUCCESS_FOLDER']
 
 IMAP_POST_TO_URL = os.environ['IMAP_POST_TO_URL']
 
-
 @asyncio.coroutine
 def idle_loop(host, user, password):
     imap_client = aioimaplib.IMAP4_SSL(host=host, timeout=30)
     yield from imap_client.wait_hello_from_server()
 
-    yield from imap_client.login(user, password)
+    login_response = yield from imap_client.login(user, password)
+    if login_response.result == "NO":
+        raise Exception("Authentication failed")
+
     response = yield from imap_client.select(IMAP_CHECK_FOLDER)
 
     while True:
