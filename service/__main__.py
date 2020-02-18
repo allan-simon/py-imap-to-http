@@ -1,11 +1,18 @@
 import os
 import asyncio
 import base64
+import importlib
 
 from aioimaplib import aioimaplib
 import mailparser
 import requests
 from requests_toolbelt import MultipartEncoder
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 
 IMAP_SERVER = os.environ['IMAP_SERVER']

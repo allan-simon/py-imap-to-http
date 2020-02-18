@@ -14,6 +14,9 @@ setup(
         'requests-toolbelt',
     ),
     extras_require={
+        'dotenv': (
+            'python-dotenv'
+        ),
         'test': (
             'mock',
             'flake8',
