@@ -49,6 +49,7 @@ The `IMAP_POST_TO_URL` should be able to treat a multipart/url-encoded POST (i.e
 
    * `from`: the email it's from
    * `to`: the email it's from
+   * `date`: an ISO 8601 formatted datetime of the email's Date header
    * `message_id`: the imap server's id associated to the email
    * `body`: the plain text body
 

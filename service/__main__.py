@@ -90,6 +90,7 @@ def treat_email(email):
         # [('Display Name', 'email')] hence the [0][1]
         'from': email.from_[0][1],
         'to': email.to[0][1],
+        'date': email.date.isoformat(),
         'message_id': email.message_id,
         'body': ''.join(email.text_plain),
     }
