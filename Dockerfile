@@ -1,4 +1,4 @@
-FROM jfloff/alpine-python:recent-slim
+FROM jfloff/alpine-python:3.8-slim
 
 # Copy required files
 COPY requirements.txt /requirements.txt

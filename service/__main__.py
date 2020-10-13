@@ -1,11 +1,18 @@
 import os
 import asyncio
 import base64
+import importlib
 
 from aioimaplib import aioimaplib
 import mailparser
 import requests
 from requests_toolbelt import MultipartEncoder
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 
 IMAP_SERVER = os.environ['IMAP_SERVER']
@@ -18,13 +25,15 @@ IMAP_FAILURE_FOLDER = os.environ['IMAP_SUCCESS_FOLDER']
 
 IMAP_POST_TO_URL = os.environ['IMAP_POST_TO_URL']
 
-
 @asyncio.coroutine
 def idle_loop(host, user, password):
     imap_client = aioimaplib.IMAP4_SSL(host=host, timeout=30)
     yield from imap_client.wait_hello_from_server()
 
-    yield from imap_client.login(user, password)
+    login_response = yield from imap_client.login(user, password)
+    if login_response.result == "NO":
+        raise Exception("Authentication failed")
+
     response = yield from imap_client.select(IMAP_CHECK_FOLDER)
 
     while True:
@@ -81,6 +90,7 @@ def treat_email(email):
         # [('Display Name', 'email')] hence the [0][1]
         'from': email.from_[0][1],
         'to': email.to[0][1],
+        'date': email.date.isoformat(),
         'message_id': email.message_id,
         'body': ''.join(email.text_plain),
     }
